@@ -33,6 +33,8 @@ namespace App_Academia
 
         private void logOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            MessageBox.Show("Usuario "+ lb_nomeUsuario.Text + " desconectado");
             lb_acesso.Text = "0";
             lb_nomeUsuario.Text = "---";
             pb_led_logado.Image = App_Academia.Resource1.led_vermelho_png;

@@ -127,6 +127,11 @@
   <ItemGroup>
     <None Include="imgs\led_vermelho.png.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
