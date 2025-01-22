@@ -42,5 +42,76 @@ namespace App_Academia
             Globais.nivel = 0;
             Globais.logado = false;
         }
+
+        private void bancoDeDadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Globais.logado == true)
+            {
+                if(Globais.nivel >= 2)
+                {
+                    //procedimento
+                }
+                else
+                {
+                    MessageBox.Show("Acesso não Permitido");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Necessario ter usuario logado!!");
+            }
+        }
+
+        private void novoUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Globais.logado == true)
+            {
+                if (Globais.nivel >= 1)
+                {
+                    F_NovoUsuario f_NovoUsuario = new F_NovoUsuario();
+                    f_NovoUsuario.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Acesso não Permitido");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Necessario ter usuario logado!!");
+            }
+        }
+
+        private void gestãoDeUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Globais.logado == true)
+            {
+                if (Globais.nivel >= 1)
+                {
+                    F_GestaoUsuarios f_GestaoUsuarios = new F_GestaoUsuarios();
+                    f_GestaoUsuarios.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Acesso não Permitido");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Necessario ter usuario logado!!");
+            }
+        }
+
+        private void novoAlunoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Globais.logado == true)
+            {
+                //procedimento
+            }
+            else
+            {
+                MessageBox.Show("Necessario ter usuario logado!!");
+            }
+        }
     }
 }
