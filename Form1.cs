@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using App_Academia;
+
+namespace App_Academia
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            F_Login f_Login = new F_Login(this); //passando o form 1 como parametro
+            f_Login.ShowDialog();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void logOnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            F_Login f_login = new F_Login(this);
+            f_login.ShowDialog();
+        }
+
+        private void logOffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lb_acesso.Text = "0";
+            lb_nomeUsuario.Text = "---";
+            pb_led_logado.Image = App_Academia.Resource1.led_vermelho_png;
+
+            Globais.nivel = 0;
+            Globais.logado = false;
+        }
+    }
+}
