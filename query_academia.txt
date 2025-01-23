@@ -1,0 +1,17 @@
+select * from tb_usuarios;
+
+select T_NOMEUSUARI0, T_SENHAUSUARIO, N_NIVELUSUARIO from tb_usuarios where n_nivelusuario = 2;
+
+select tbt.N_IDTURMA as 'ID Turmas',
+        tbt.T_DSTURMA as 'Desc. Turmas',
+        tbt.N_MAXALUNOS as 'Max. ALunos',
+        tbh.T_DSHORARIO as 'Horario',
+        tbp.T_NOMEPROFESSOR as 'Professor',
+        CASE 
+            WHEN tbt.T_STATUS = 'A' THEN 'Ativa'
+            WHEN tbt.T_STATUS = 'P' THEN 'Paralisada'
+            WHEN tbt.T_STATUS = 'C' THEN 'Cancelada'
+        END as 'Status'
+ from tb_turmas as tbt
+ inner join tb_horarios as tbh on tbh.N_IDHORARIO = tbt.N_IDHORARIO,
+            tb_professores as tbp on tbp.N_IDPROFESSOR = tbt.N_IDPROFESSOR;

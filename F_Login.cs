@@ -39,7 +39,7 @@ namespace App_Academia
             }
 
             string sql = "SELECT * FROM tb_usuarios WHERE T_USERNAME ='"+username+"'AND T_SENHAUSUARIO ='" +senha+"';";
-            dt = Banco.Consulta(sql); //faz retornar uma tabela com o comando do sql acima
+            dt = Banco.dql(sql); //faz retornar uma tabela com o comando do sql acima
 
             if(dt.Rows.Count == 1) //confere se retorna alguma linha pra ver se tem o username e senha na db
             {

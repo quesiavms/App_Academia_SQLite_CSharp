@@ -11,6 +11,9 @@ namespace App_Academia
         public static string versao = "1.0";
         public static bool logado = false;
         public static int nivel = 0; //0 - basico, 1 - gerente, 2 - master
+        public static string caminho = System.Environment.CurrentDirectory;
+        public static string nomeBanco = "db_academia";
+        public static string caminhoBanco = caminho +@"\db\";
 
         /*
         N_IDUSUARIO

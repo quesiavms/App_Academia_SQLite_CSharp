@@ -15,7 +15,7 @@ namespace App_Academia
 
         private static SQLiteConnection ConexaoBanco()
         {
-            conexao = new SQLiteConnection("Data Source = C:\\Users\\quesi\\OneDrive\\.Estagio_TCS\\Estagio_Courses\\App_SQLite_CSharp\\App_Academia\\db\\db_academia");
+            conexao = new SQLiteConnection("Data Source="+Globais.caminhoBanco + Globais.nomeBanco);
             conexao.Open();
             return conexao;
         }
@@ -40,8 +40,8 @@ namespace App_Academia
                 throw ex;
             }
         }
-
-        public static DataTable Consulta(string sql)
+        //funcao genericas
+        public static DataTable dql(string sql) //data query language (select)
         {
             SQLiteDataAdapter da = null;
             DataTable dt = new DataTable();
@@ -58,6 +58,37 @@ namespace App_Academia
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+
+        public static void dml(string q, string msgOK = null, string msgERRO = null ) //data manipulation language (insert, delete, update)
+        {
+            SQLiteDataAdapter da = null;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                var vcon = ConexaoBanco();
+                var cmd = vcon.CreateCommand();
+                cmd.CommandText = q;
+                da = new SQLiteDataAdapter(cmd.CommandText, vcon); //comando sql e a conexao do banco
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Usuario Atualizado com Sucesso");
+                vcon.Close();
+
+                if(msgOK != null)
+                {
+                    MessageBox.Show(msgOK);
+                }
+            }
+            catch (Exception ex)
+            {
+                if(msgERRO != null)
+                {
+                    MessageBox.Show(msgERRO+ "/n" +ex.Message);
+                }
                 throw ex;
             }
         }
@@ -87,7 +118,7 @@ namespace App_Academia
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao Salvar Novo Usuario");
+                MessageBox.Show("Erro ao Salvar Novo Usuario\n" + ex.Message);
             }
         }
 
