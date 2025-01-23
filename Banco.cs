@@ -75,7 +75,7 @@ namespace App_Academia
                 da = new SQLiteDataAdapter(cmd.CommandText, vcon); //comando sql e a conexao do banco
                 cmd.ExecuteNonQuery();
 
-                MessageBox.Show("Usuario Atualizado com Sucesso");
+                MessageBox.Show("Dado Atualizado com Sucesso");
                 vcon.Close();
 
                 if(msgOK != null)

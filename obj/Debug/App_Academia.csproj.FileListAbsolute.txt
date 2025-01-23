@@ -21,3 +21,4 @@ C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Acade
 C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\obj\Debug\App_Academia.Resource1.resources
 C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\obj\Debug\App_Academia.F_NovoUsuario.resources
 C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\obj\Debug\App_Academia.F_GestaoUsuarios.resources
+C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\obj\Debug\App_Academia.F_Horarios.resources
