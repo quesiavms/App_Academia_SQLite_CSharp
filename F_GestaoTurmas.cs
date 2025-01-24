@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -83,7 +84,20 @@ namespace App_Academia
                 n_maxAlunos.Value = dt.Rows[0].Field<Int64>("N_MAXALUNOS");
                 cb_status.SelectedValue= dt.Rows[0].Field<string>("T_STATUS");
                 cb_horario.SelectedValue = dt.Rows[0].Field<Int64>("N_IDHORARIO");
+                tb_vagas.Text = CalculoVagas();
             }
+        }
+
+        private string CalculoVagas()
+        {//Calculo de Vagas
+            string queryVagas = string.Format(@"SELECT COUNT(N_IDALUNO) AS 'contVagas'
+                                                FROM tb_alunos
+                                                WHERE T_STATUS = 'A' AND N_IDTURMA = {0}", idSelecionado);
+            DataTable dt = Banco.dql(queryVagas);
+            int vagas = Int32.Parse(Math.Round(n_maxAlunos.Value, 0).ToString()); //colocando qntd max de alunos
+            vagas -= Int32.Parse(dt.Rows[0].Field<Int64>("contVagas").ToString()); //subtraindo dos alunos ativos
+            tb_vagas.Text = vagas.ToString();
+            return vagas.ToString();
         }
 
         private void btn_novo_Click(object sender, EventArgs e)
@@ -144,6 +158,11 @@ namespace App_Academia
         private void btn_fechar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void n_maxAlunos_ValueChanged(object sender, EventArgs e)
+        {
+            tb_vagas.Text = CalculoVagas();
         }
     }
 }
