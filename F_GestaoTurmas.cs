@@ -240,7 +240,6 @@ namespace App_Academia
             {
                 System.Diagnostics.Process.Start(Globais.caminho + @"\turmas.pdf");
             }
-
         }
     }
 }

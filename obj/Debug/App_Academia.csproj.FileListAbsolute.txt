@@ -28,3 +28,5 @@ C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Acade
 C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\bin\Debug\itextsharp.dll
 C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\bin\Debug\BouncyCastle.Cryptography.xml
 C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\bin\Debug\itextsharp.xml
+C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\obj\Debug\App_Academia.F_NovoAluno.resources
+C:\Users\quesi\OneDrive\.Estagio_TCS\Estagio_Courses\App_SQLite_CSharp\App_Academia\obj\Debug\App_Academia.F_SelecionarTurma.resources

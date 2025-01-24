@@ -102,5 +102,11 @@ namespace App_Academia
             F_GestaoTurmas f_GestaoTurmas = new F_GestaoTurmas();
             abreForm(2, f_GestaoTurmas);
         }
+
+        private void novoAlunoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            F_NovoAluno f_NovoAluno = new F_NovoAluno();
+            abreForm(1,f_NovoAluno);
+        }
     }
 }
