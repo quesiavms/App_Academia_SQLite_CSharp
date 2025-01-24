@@ -46,6 +46,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tb_dscTurma = new System.Windows.Forms.TextBox();
             this.n_maxAlunos = new System.Windows.Forms.NumericUpDown();
+            this.tb_vagas = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tb_idTurma = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_turmas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.n_maxAlunos)).BeginInit();
@@ -61,15 +65,15 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 417);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(732, 33);
+            this.panel1.Size = new System.Drawing.Size(982, 33);
             this.panel1.TabIndex = 47;
             // 
             // btn_imprimir
             // 
             this.btn_imprimir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_imprimir.Location = new System.Drawing.Point(472, 3);
+            this.btn_imprimir.Location = new System.Drawing.Point(701, 3);
             this.btn_imprimir.Name = "btn_imprimir";
-            this.btn_imprimir.Size = new System.Drawing.Size(150, 23);
+            this.btn_imprimir.Size = new System.Drawing.Size(157, 23);
             this.btn_imprimir.TabIndex = 8;
             this.btn_imprimir.Text = "Imprimir Turma";
             this.btn_imprimir.UseVisualStyleBackColor = true;
@@ -77,47 +81,51 @@
             // btn_fechar
             // 
             this.btn_fechar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_fechar.Location = new System.Drawing.Point(628, 3);
+            this.btn_fechar.Location = new System.Drawing.Point(864, 3);
             this.btn_fechar.Name = "btn_fechar";
-            this.btn_fechar.Size = new System.Drawing.Size(89, 23);
+            this.btn_fechar.Size = new System.Drawing.Size(103, 23);
             this.btn_fechar.TabIndex = 9;
             this.btn_fechar.Text = "Fechar";
             this.btn_fechar.UseVisualStyleBackColor = true;
+            this.btn_fechar.Click += new System.EventHandler(this.btn_fechar_Click);
             // 
             // btn_excluir
             // 
             this.btn_excluir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_excluir.Location = new System.Drawing.Point(316, 3);
+            this.btn_excluir.Location = new System.Drawing.Point(356, 3);
             this.btn_excluir.Name = "btn_excluir";
-            this.btn_excluir.Size = new System.Drawing.Size(150, 23);
+            this.btn_excluir.Size = new System.Drawing.Size(173, 23);
             this.btn_excluir.TabIndex = 7;
             this.btn_excluir.Text = "Excluir Turma";
             this.btn_excluir.UseVisualStyleBackColor = true;
+            this.btn_excluir.Click += new System.EventHandler(this.btn_excluir_Click);
             // 
             // btn_salvar
             // 
             this.btn_salvar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_salvar.Location = new System.Drawing.Point(136, 3);
+            this.btn_salvar.Location = new System.Drawing.Point(162, 3);
             this.btn_salvar.Name = "btn_salvar";
-            this.btn_salvar.Size = new System.Drawing.Size(174, 23);
+            this.btn_salvar.Size = new System.Drawing.Size(188, 23);
             this.btn_salvar.TabIndex = 6;
             this.btn_salvar.Text = "Salvar Alterações";
             this.btn_salvar.UseVisualStyleBackColor = true;
+            this.btn_salvar.Click += new System.EventHandler(this.btn_salvar_Click);
             // 
             // btn_novo
             // 
             this.btn_novo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_novo.Location = new System.Drawing.Point(3, 3);
             this.btn_novo.Name = "btn_novo";
-            this.btn_novo.Size = new System.Drawing.Size(127, 23);
+            this.btn_novo.Size = new System.Drawing.Size(153, 23);
             this.btn_novo.TabIndex = 5;
             this.btn_novo.Text = "Nova Turma";
             this.btn_novo.UseVisualStyleBackColor = true;
+            this.btn_novo.Click += new System.EventHandler(this.btn_novo_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(450, 66);
+            this.label1.Location = new System.Drawing.Point(712, 135);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 16);
             this.label1.TabIndex = 48;
@@ -145,14 +153,14 @@
             this.dgv_turmas.RowHeadersWidth = 51;
             this.dgv_turmas.RowTemplate.Height = 24;
             this.dgv_turmas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_turmas.Size = new System.Drawing.Size(436, 402);
+            this.dgv_turmas.Size = new System.Drawing.Size(698, 402);
             this.dgv_turmas.TabIndex = 50;
             this.dgv_turmas.SelectionChanged += new System.EventHandler(this.dgv_turmas_SelectionChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(450, 121);
+            this.label2.Location = new System.Drawing.Point(712, 190);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 16);
             this.label2.TabIndex = 51;
@@ -161,7 +169,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(578, 121);
+            this.label3.Location = new System.Drawing.Point(840, 190);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 16);
             this.label3.TabIndex = 52;
@@ -170,7 +178,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(450, 190);
+            this.label4.Location = new System.Drawing.Point(712, 259);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 16);
             this.label4.TabIndex = 53;
@@ -179,7 +187,7 @@
             // cb_professor
             // 
             this.cb_professor.FormattingEnabled = true;
-            this.cb_professor.Location = new System.Drawing.Point(450, 85);
+            this.cb_professor.Location = new System.Drawing.Point(712, 154);
             this.cb_professor.Name = "cb_professor";
             this.cb_professor.Size = new System.Drawing.Size(255, 24);
             this.cb_professor.TabIndex = 1;
@@ -187,7 +195,7 @@
             // cb_status
             // 
             this.cb_status.FormattingEnabled = true;
-            this.cb_status.Location = new System.Drawing.Point(581, 149);
+            this.cb_status.Location = new System.Drawing.Point(843, 218);
             this.cb_status.Name = "cb_status";
             this.cb_status.Size = new System.Drawing.Size(124, 24);
             this.cb_status.TabIndex = 3;
@@ -195,7 +203,7 @@
             // cb_horario
             // 
             this.cb_horario.FormattingEnabled = true;
-            this.cb_horario.Location = new System.Drawing.Point(450, 209);
+            this.cb_horario.Location = new System.Drawing.Point(712, 278);
             this.cb_horario.Name = "cb_horario";
             this.cb_horario.Size = new System.Drawing.Size(255, 24);
             this.cb_horario.TabIndex = 4;
@@ -203,7 +211,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(447, 9);
+            this.label5.Location = new System.Drawing.Point(709, 78);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 16);
             this.label5.TabIndex = 55;
@@ -211,23 +219,61 @@
             // 
             // tb_dscTurma
             // 
-            this.tb_dscTurma.Location = new System.Drawing.Point(450, 28);
+            this.tb_dscTurma.Location = new System.Drawing.Point(712, 97);
             this.tb_dscTurma.Name = "tb_dscTurma";
             this.tb_dscTurma.Size = new System.Drawing.Size(255, 22);
             this.tb_dscTurma.TabIndex = 56;
             // 
             // n_maxAlunos
             // 
-            this.n_maxAlunos.Location = new System.Drawing.Point(450, 151);
+            this.n_maxAlunos.Location = new System.Drawing.Point(712, 220);
             this.n_maxAlunos.Name = "n_maxAlunos";
             this.n_maxAlunos.Size = new System.Drawing.Size(120, 22);
             this.n_maxAlunos.TabIndex = 57;
+            // 
+            // tb_vagas
+            // 
+            this.tb_vagas.Location = new System.Drawing.Point(712, 339);
+            this.tb_vagas.Name = "tb_vagas";
+            this.tb_vagas.Size = new System.Drawing.Size(120, 22);
+            this.tb_vagas.TabIndex = 58;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(712, 320);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(121, 16);
+            this.label6.TabIndex = 59;
+            this.label6.Text = "Vagas Disponiveis";
+            // 
+            // tb_idTurma
+            // 
+            this.tb_idTurma.Location = new System.Drawing.Point(715, 36);
+            this.tb_idTurma.Name = "tb_idTurma";
+            this.tb_idTurma.ReadOnly = true;
+            this.tb_idTurma.Size = new System.Drawing.Size(117, 22);
+            this.tb_idTurma.TabIndex = 61;
+            this.tb_idTurma.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(712, 9);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(20, 16);
+            this.label12.TabIndex = 60;
+            this.label12.Text = "ID";
             // 
             // F_GestaoTurmas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 450);
+            this.ClientSize = new System.Drawing.Size(982, 450);
+            this.Controls.Add(this.tb_idTurma);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.tb_vagas);
             this.Controls.Add(this.n_maxAlunos);
             this.Controls.Add(this.tb_dscTurma);
             this.Controls.Add(this.label5);
@@ -273,5 +319,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tb_dscTurma;
         private System.Windows.Forms.NumericUpDown n_maxAlunos;
+        private System.Windows.Forms.TextBox tb_vagas;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tb_idTurma;
+        private System.Windows.Forms.Label label12;
     }
 }
