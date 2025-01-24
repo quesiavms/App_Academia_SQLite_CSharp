@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.SymbolStore;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace App_Academia
 {
@@ -163,6 +168,79 @@ namespace App_Academia
         private void n_maxAlunos_ValueChanged(object sender, EventArgs e)
         {
             tb_vagas.Text = CalculoVagas();
+        }
+
+        private void btn_imprimir_Click(object sender, EventArgs e)
+        {
+            string nomeArquivo = Globais.caminho + @"\turmas.pdf";
+            FileStream arquivoPDF = new FileStream(nomeArquivo, FileMode.Create); //caso ja tenha arquivo com esse nome, ele sobreescreve o conteudo
+            Document doc = new Document(PageSize.A4);
+            PdfWriter escritorPDF = PdfWriter.GetInstance(doc, arquivoPDF);
+
+            iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(Globais.caminho + @"\logoAcademia.png");
+            logo.ScaleToFit(140f, 110f);
+            //logo.Alignment = Element.ALIGN_LEFT;
+            logo.SetAbsolutePosition(0f, 742f); //x e y 
+ 
+            string dados = "";
+
+            Paragraph paragrafo1 = new Paragraph(dados, new iTextSharp.text.Font(iTextSharp.text.Font.NORMAL, 20, (int)System.Drawing.FontStyle.Bold));
+            paragrafo1.Alignment = Element.ALIGN_CENTER;
+            paragrafo1.Add("Academia Shape Sharp\n");
+            paragrafo1.Font = new iTextSharp.text.Font(iTextSharp.text.Font.NORMAL, 14, (int)System.Drawing.FontStyle.Italic);
+            paragrafo1.Alignment = Element.ALIGN_CENTER;                
+            paragrafo1.Add("Turmas\n\n");
+
+            PdfPTable tabela = new PdfPTable(6); //numero de colunas
+            tabela.WidthPercentage = 110; // Largura total da página
+            tabela.SpacingBefore = 20f; // Espaçamento entre o parágrafo 1 e a tabela
+            tabela.DefaultCell.FixedHeight = 30;
+
+            tabela.AddCell("ID");
+            tabela.AddCell("Turma");
+            tabela.AddCell("Max Alunos");
+            tabela.AddCell("Horario");
+            tabela.AddCell("Professor");
+            tabela.AddCell("Status");
+
+            string vqueryDGV = @"SELECT tbt.N_IDTURMA as 'ID', tbt.T_DSTURMA as 'Desc. Turmas', tbt.N_MAXALUNOS as 'Max. ALunos',tbh.T_DSHORARIO as 'Horario', tbp.T_NOMEPROFESSOR as 'Professor',
+                                 CASE WHEN tbt.T_STATUS = 'A' THEN 'Ativa'
+                                      WHEN tbt.T_STATUS = 'P' THEN 'Paralisada'
+                                      WHEN tbt.T_STATUS = 'C' THEN 'Cancelada'
+                                 END as 'Status' from tb_turmas as tbt
+                                 INNER JOIN tb_horarios as tbh on tbh.N_IDHORARIO = tbt.N_IDHORARIO, tb_professores as tbp on tbp.N_IDPROFESSOR = tbt.N_IDPROFESSOR
+                                 ORDER BY tbt.N_IDHORARIO DESC;";
+            
+            DataTable dtTurmas = Banco.dql(vqueryDGV);
+
+            for(int i = 0; i < dtTurmas.Rows.Count; i++)
+            {
+                tabela.AddCell(dtTurmas.Rows[i].Field<Int64>("ID").ToString()); //pesquisando na dtTurmas segundo o nome da coluna da query
+                tabela.AddCell(dtTurmas.Rows[i].Field<string>("Desc. Turmas").ToString());
+                tabela.AddCell(dtTurmas.Rows[i].Field<Int64>("Max. ALunos").ToString());
+                tabela.AddCell(dtTurmas.Rows[i].Field<string>("Horario").ToString());
+                tabela.AddCell(dtTurmas.Rows[i].Field<string>("Professor").ToString());
+                tabela.AddCell(dtTurmas.Rows[i].Field<string>("Status").ToString());
+            }
+
+            Paragraph paragrafo2 = new Paragraph(dados, new iTextSharp.text.Font(iTextSharp.text.Font.NORMAL, 12, (int)System.Drawing.FontStyle.Underline));
+            paragrafo2.Alignment = Element.ALIGN_CENTER;
+            string texto = "https://github.com/quesiavms";
+            paragrafo2.Add(texto);
+
+            doc.Open();
+            doc.Add(logo);
+            doc.Add(paragrafo1);
+            doc.Add(tabela);
+            doc.Add(paragrafo2);
+            doc.Close();
+
+            DialogResult res = MessageBox.Show("Deseja abrir o relatorio?", "Abrir Relatorio", MessageBoxButtons.YesNo);
+            if (res == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start(Globais.caminho + @"\turmas.pdf");
+            }
+
         }
     }
 }
