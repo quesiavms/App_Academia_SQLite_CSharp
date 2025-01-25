@@ -108,5 +108,11 @@ namespace App_Academia
             F_NovoAluno f_NovoAluno = new F_NovoAluno();
             abreForm(1,f_NovoAluno);
         }
+
+        private void gestãoDeAlunosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            F_GestaoAlunos f_GestaoAlunos = new F_GestaoAlunos();
+            abreForm(1, f_GestaoAlunos);
+        }
     }
 }

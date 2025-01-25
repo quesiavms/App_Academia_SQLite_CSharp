@@ -81,7 +81,7 @@ namespace App_Academia
                 idSelecionado = dgv_turmas.Rows[dgv_turmas.SelectedRows[0].Index].Cells[0].Value.ToString();
                 string vqueryCampos = @"SELECT N_IDTURMA, T_DSTURMA, N_IDPROFESSOR, N_IDHORARIO, N_MAXALUNOS, T_STATUS
                                         FROM tb_turmas
-                                        WHERE N_IDTURMA =" + idSelecionado+";";
+                                        WHERE N_IDTURMA = " + idSelecionado+";";
                 DataTable dt = Banco.dql(vqueryCampos);
                 tb_idTurma.Text = dt.Rows[0].Field<Int64>("N_IDTURMA").ToString();
                 tb_dscTurma.Text= dt.Rows[0].Field<string>("T_DSTURMA");

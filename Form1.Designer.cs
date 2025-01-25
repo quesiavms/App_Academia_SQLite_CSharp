@@ -50,6 +50,7 @@
             this.lOGINToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gestãoDeAlunosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_led_logado)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -132,7 +133,8 @@
             // alunosToolStripMenuItem
             // 
             this.alunosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.novoAlunoToolStripMenuItem});
+            this.novoAlunoToolStripMenuItem,
+            this.gestãoDeAlunosToolStripMenuItem});
             this.alunosToolStripMenuItem.Name = "alunosToolStripMenuItem";
             this.alunosToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
             this.alunosToolStripMenuItem.Text = "Alunos";
@@ -240,6 +242,13 @@
             this.logOffToolStripMenuItem.Text = "Log - off";
             this.logOffToolStripMenuItem.Click += new System.EventHandler(this.logOffToolStripMenuItem_Click);
             // 
+            // gestãoDeAlunosToolStripMenuItem
+            // 
+            this.gestãoDeAlunosToolStripMenuItem.Name = "gestãoDeAlunosToolStripMenuItem";
+            this.gestãoDeAlunosToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.gestãoDeAlunosToolStripMenuItem.Text = "Gestão de Alunos";
+            this.gestãoDeAlunosToolStripMenuItem.Click += new System.EventHandler(this.gestãoDeAlunosToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -286,5 +295,6 @@
         public System.Windows.Forms.PictureBox pb_led_logado;
         private System.Windows.Forms.ToolStripMenuItem bancoDeDadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem turmasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gestãoDeAlunosToolStripMenuItem;
     }
 }

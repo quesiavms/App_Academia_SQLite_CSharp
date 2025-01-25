@@ -48,7 +48,7 @@ namespace App_Academia
                 formNovoAluno.tb_turma.Text = dgv.Rows[dgv.SelectedRows[0].Index].Cells[1].Value.ToString(); //pega descrição da turma
                 formNovoAluno.tb_turma.Tag = dgv.Rows[dgv.SelectedRows[0].Index].Cells[0].Value.ToString(); //pega o ID da turma pra colocar na tag, e usarmos a tag na query de novo aluno
             }
-
+            this.Close();
         }
     }
 }
