@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Data.Entity.Core.Objects;
 
 namespace App_Academia
 {
@@ -63,7 +65,7 @@ namespace App_Academia
             //usamos tag em turma pq nao queremos o nome da turma querendo o ID da turma
             string queryInsertAluno = string.Format(@"INSERT INTO tb_alunos (T_NOMEALUNO, T_TELFEONE, T_STATUS, N_IDTURMA)
                                                       VALUES ('{0}', '{1}', '{2}',{3})", tb_nome.Text, mtb_telefone.Text, cb_status.SelectedValue, tb_turma.Tag.ToString());
-            
+
             Banco.dml(queryInsertAluno);
             MessageBox.Show("Novo Aluno inserido com Sucesso");
 
@@ -89,6 +91,40 @@ namespace App_Academia
         {
             F_SelecionarTurma f_SelecionarTurma = new F_SelecionarTurma(this);
             f_SelecionarTurma.ShowDialog();
+        }
+
+        private void btn_addFoto_Click(object sender, EventArgs e)
+        {
+            string origemCompleto = "";
+            string foto = "";
+            string pastaDestino = Globais.caminhoFoto;
+            string destinoCompleto = "";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                origemCompleto = openFileDialog1.FileName;
+                foto = openFileDialog1.SafeFileName;
+
+                destinoCompleto = pastaDestino + foto;
+            }
+
+            if (File.Exists(destinoCompleto))
+            {
+                if (MessageBox.Show("Arquivo ja existente, deseja substituir?", "Substituir", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            System.IO.File.Copy(origemCompleto, destinoCompleto, true);
+            if (File.Exists(destinoCompleto))
+            {
+                pb_foto.ImageLocation = destinoCompleto;
+            }
+            else
+            {
+                MessageBox.Show("Arquivo nao copiado !!");
+            }
         }
     }
 }

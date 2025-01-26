@@ -14,6 +14,7 @@ namespace App_Academia
         public static string caminho = System.Environment.CurrentDirectory;
         public static string nomeBanco = "db_academia";
         public static string caminhoBanco = caminho +@"\db\";
+        public static string caminhoFoto = caminho + @"\fotos\";
 
         /*
         N_IDUSUARIO
