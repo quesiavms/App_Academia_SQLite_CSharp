@@ -15,6 +15,7 @@ namespace App_Academia
         public static string nomeBanco = "db_academia";
         public static string caminhoBanco = caminho +@"\db\";
         public static string caminhoFoto = caminho + @"\fotos\";
+        public static string caminhoCarteirinha = caminho + @"\carteirinha\";
 
         /*
         N_IDUSUARIO

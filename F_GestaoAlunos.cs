@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace App_Academia
 {
@@ -127,6 +129,59 @@ namespace App_Academia
         private void btn_fechar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btn_imprimir_Click(object sender, EventArgs e)
+        {
+            string nomeArquivo = Globais.caminhoCarteirinha + @"\carteirinha "+tb_nome.Text+".pdf";
+            FileStream arquivoPDF = new FileStream(nomeArquivo, FileMode.Create);
+
+            Document doc = new Document(PageSize.A4);
+            PdfWriter escritorPDF = PdfWriter.GetInstance(doc, arquivoPDF);
+
+            iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(Globais.caminho + @"/logoAcademia.png");
+            logo.ScaleToFit(140f, 110f);
+            //logo.Alignment = Element.ALIGN_LEFT;
+            logo.SetAbsolutePosition(0f, 742f); //x e y 
+
+            string dados = "";
+            Paragraph paragrafo1 = new Paragraph(dados, new iTextSharp.text.Font(iTextSharp.text.Font.NORMAL, 20, (int)System.Drawing.FontStyle.Bold));
+            paragrafo1.Alignment = Element.ALIGN_RIGHT;
+            paragrafo1.Add("Carteirinha de Aluno\n");
+            paragrafo1.Font = new iTextSharp.text.Font(iTextSharp.text.Font.NORMAL, 14, (int)System.Drawing.FontStyle.Italic);
+            paragrafo1.Alignment = Element.ALIGN_RIGHT;
+            paragrafo1.Add("Nome: "+tb_nome.Text+"\nTelefone: "+mtb_telefone.Text+"\n\n");
+
+            Paragraph paragrafoFoto = new Paragraph();
+            string fotoDoAluno = "";
+            string queryDaFoto = string.Format( @"SELECT T_FOTO
+                                                  FROM tb_alunos 
+                                                  WHERE N_IDALUNO = {0}",idSelecionado);
+            DataTable dt = Banco.dql(queryDaFoto);
+            fotoDoAluno = dt.Rows[0].Field<string>("T_FOTO");
+            
+            
+            if (!string.IsNullOrEmpty(fotoDoAluno))// verificando se o caminho da foto não está vazio
+            {
+                iTextSharp.text.Image fotoImagem = iTextSharp.text.Image.GetInstance(fotoDoAluno);// Cria a imagem a partir do caminho da foto
+
+                fotoImagem.ScaleToFit(200f, 200f);
+                fotoImagem.SetAbsolutePosition(0f, 700f);
+
+                paragrafoFoto.Add(fotoImagem);// Adiciona a imagem no parágrafo
+            }
+
+            doc.Open();
+            //doc.Add(logo);
+            doc.Add(paragrafoFoto);
+            doc.Add(paragrafo1);
+            doc.Close();
+
+            if(MessageBox.Show("Deseja abrir a carteirinha?", "Carteirinha", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start(Globais.caminhoCarteirinha + @"\carteirinha " + tb_nome.Text + ".pdf");
+            }
+
         }
     }
 }
