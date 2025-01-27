@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,9 +65,9 @@ namespace App_Academia
             if(linha > 0)
             {
                 idSelecionado = dgv_gestaoAlunos.Rows[dgv.SelectedRows[0].Index].Cells[0].Value.ToString();
-                string vqueryCampos = string.Format( @"SELECT N_IDALUNO, T_NOMEALUNO, T_TELFEONE, T_STATUS, N_IDTURMA
+                string vqueryCampos = string.Format(@"SELECT N_IDALUNO, T_NOMEALUNO, T_TELFEONE, T_STATUS, N_IDTURMA, T_FOTO
                                                        FROM tb_alunos
-                                                       WHERE N_IDALUNO = {0};",idSelecionado);
+                                                       WHERE N_IDALUNO = {0};", idSelecionado);
                 DataTable dt = Banco.dql(vqueryCampos);
                 tb_nome.Text = dt.Rows[0].Field<string>("T_NOMEALUNO");
                 mtb_telefone.Text = dt.Rows[0].Field<string>("T_TELFEONE");
@@ -74,6 +75,7 @@ namespace App_Academia
                 cb_status.SelectedValue = dt.Rows[0].Field<string>("T_STATUS");
                 cb_turma.SelectedValue = dt.Rows[0].Field<Int64>("N_IDTURMA");
                 turmaAtual = cb_turma.Text;
+                pb_fotoAluno.ImageLocation = dt.Rows[0].Field<string>("T_FOTO");
             }
         }
 
@@ -103,11 +105,22 @@ namespace App_Academia
             DialogResult res = MessageBox.Show("Deseja excluir?", "Exluir", MessageBoxButtons.YesNo);
             if(res == DialogResult.Yes)
             {
+
+                if (File.Exists(pb_fotoAluno.ImageLocation))
+                {
+                    File.Delete(pb_fotoAluno.ImageLocation);
+                }
+
                 string queryExcluirAluno = string.Format(@"DELETE 
                                                            FROM tb_alunos
                                                            WHERE N_IDALUNO = {0}",idSelecionado);
                 Banco.dml(queryExcluirAluno);
                 dgv_gestaoAlunos.Rows.Remove(dgv_gestaoAlunos.CurrentRow);
+                tb_nome.Clear();
+                mtb_telefone.Clear();
+                cb_status.SelectedIndex = 0;
+                cb_turma.SelectedIndex = 0;
+                pb_fotoAluno.ImageLocation = null;
             }
         }
 

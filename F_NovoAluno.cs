@@ -9,11 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Data.Entity.Core.Objects;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace App_Academia
 {
     public partial class F_NovoAluno : Form
     {
+        string origemCompleto = "";
+        string foto = "";
+        string pastaDestino = Globais.caminhoFoto;
+        string destinoCompleto = "";
         public F_NovoAluno()
         {
             InitializeComponent();
@@ -43,6 +48,7 @@ namespace App_Academia
             btn_cancelar.Enabled = true;
             btn_novo.Enabled = false;
             tb_turma.Clear();
+            pb_foto.Image = null;
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
@@ -62,12 +68,36 @@ namespace App_Academia
 
         private void btn_salvar_Click(object sender, EventArgs e)
         {
+            if(destinoCompleto == "")
+            {
+                if(MessageBox.Show("Nenhuma foto selecionada, deseja continuar?", "ERROR", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            if(destinoCompleto != "")
+            {
+                System.IO.File.Copy(origemCompleto, destinoCompleto, true);
+                if (File.Exists(destinoCompleto))
+                {
+                    pb_foto.ImageLocation = destinoCompleto;
+                }
+                else
+                {
+                    if(MessageBox.Show("Erro ao localizar arquivo, deseja continuar?", "ERROR", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+            }
+
             //usamos tag em turma pq nao queremos o nome da turma querendo o ID da turma
-            string queryInsertAluno = string.Format(@"INSERT INTO tb_alunos (T_NOMEALUNO, T_TELFEONE, T_STATUS, N_IDTURMA)
-                                                      VALUES ('{0}', '{1}', '{2}',{3})", tb_nome.Text, mtb_telefone.Text, cb_status.SelectedValue, tb_turma.Tag.ToString());
+            string queryInsertAluno = string.Format(@"INSERT INTO tb_alunos (T_NOMEALUNO, T_TELFEONE, T_STATUS, N_IDTURMA, T_FOTO)
+                                                      VALUES ('{0}', '{1}', '{2}',{3}, '{4}')", tb_nome.Text, mtb_telefone.Text, cb_status.SelectedValue, tb_turma.Tag.ToString(), destinoCompleto);
 
             Banco.dml(queryInsertAluno);
-            MessageBox.Show("Novo Aluno inserido com Sucesso");
+            MessageBox.Show("Novo Aluno Inserido");
 
             tb_nome.Enabled = false;
             mtb_telefone.Enabled = false;
@@ -80,6 +110,7 @@ namespace App_Academia
             btn_cancelar.Enabled = false;
             btn_novo.Enabled = true;
             tb_turma.Clear();
+            pb_foto.ImageLocation = destinoCompleto;
         }
 
         private void btn_fechar_Click(object sender, EventArgs e)
@@ -95,15 +126,15 @@ namespace App_Academia
 
         private void btn_addFoto_Click(object sender, EventArgs e)
         {
-            string origemCompleto = "";
-            string foto = "";
-            string pastaDestino = Globais.caminhoFoto;
-            string destinoCompleto = "";
+            origemCompleto = "";
+            foto = "";
+            pastaDestino = Globais.caminhoFoto;
+            destinoCompleto = "";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                origemCompleto = openFileDialog1.FileName;
-                foto = openFileDialog1.SafeFileName;
+                origemCompleto = openFileDialog1.FileName; //pegando nome do arquivo e caminho
+                foto = openFileDialog1.SafeFileName; //pegando só o nome do arquivo
 
                 destinoCompleto = pastaDestino + foto;
             }
@@ -115,16 +146,7 @@ namespace App_Academia
                     return;
                 }
             }
-
-            System.IO.File.Copy(origemCompleto, destinoCompleto, true);
-            if (File.Exists(destinoCompleto))
-            {
-                pb_foto.ImageLocation = destinoCompleto;
-            }
-            else
-            {
-                MessageBox.Show("Arquivo nao copiado !!");
-            }
+            pb_foto.ImageLocation = origemCompleto;
         }
     }
 }
