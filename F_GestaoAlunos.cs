@@ -20,6 +20,10 @@ namespace App_Academia
         string idSelecionado = "";
         string turma = "";
         int linha = 0;
+        string origemCompleto = "";
+        string foto = "";
+        string pastaDestino = Globais.caminhoFoto;
+        string destinoCompleto = "";
         public F_GestaoAlunos()
         {
             InitializeComponent();
@@ -48,7 +52,7 @@ namespace App_Academia
 
             //popular combo box de status
             Dictionary<string, string> status = new Dictionary<string, string>();
-            status.Add("A","Ativo");
+            status.Add("A", "Ativo");
             status.Add("B", "Bloqueado");
             status.Add("C", "Cancelado");
             cb_status.DataSource = new BindingSource(status, null);
@@ -64,7 +68,7 @@ namespace App_Academia
             DataGridView dgv = (DataGridView)sender;
             linha = dgv.SelectedRows.Count;
 
-            if(linha > 0)
+            if (linha > 0)
             {
                 idSelecionado = dgv_gestaoAlunos.Rows[dgv.SelectedRows[0].Index].Cells[0].Value.ToString();
                 string vqueryCampos = string.Format(@"SELECT N_IDALUNO, T_NOMEALUNO, T_TELFEONE, T_STATUS, N_IDTURMA, T_FOTO
@@ -77,52 +81,52 @@ namespace App_Academia
                 cb_status.SelectedValue = dt.Rows[0].Field<string>("T_STATUS");
                 cb_turma.SelectedValue = dt.Rows[0].Field<Int64>("N_IDTURMA");
                 turmaAtual = cb_turma.Text;
-                pb_fotoAluno.ImageLocation = dt.Rows[0].Field<string>("T_FOTO");
+                pb_foto.ImageLocation = dt.Rows[0].Field<string>("T_FOTO");
             }
         }
 
         private void btn_salvar_Click(object sender, EventArgs e)
         {
             turma = cb_turma.Text;
-            if(turmaAtual != turma)
+            if (turmaAtual != turma)
             {
                 string[] t = turma.Split(' ');
                 int vagas = int.Parse(t[1]);
-                if(vagas < 1)
+                if (vagas < 1)
                 {
                     MessageBox.Show("Nao ha vagas para essa turma, selecione outra turma");
                     cb_turma.Focus();
                     return;
                 }
                 linha = dgv_gestaoAlunos.SelectedRows[0].Index;
-                string queryAtualizarAluno = string.Format(@"UPDATE tb_alunos SET T_NOMEALUNO = '{0}',T_TELFEONE = '{1}',T_STATUS = '{2}', N_IDTURMA = {3}
-                                                             WHERE  N_IDALUNO = {4}", tb_nome.Text, mtb_telefone.Text, cb_status.SelectedValue, cb_turma.SelectedValue, idSelecionado);
+                string queryAtualizarAluno = string.Format(@"UPDATE tb_alunos SET T_NOMEALUNO = '{0}',T_TELFEONE = '{1}',T_STATUS = '{2}', N_IDTURMA = {3}, T_FOTO = '{4}'
+                                                             WHERE  N_IDALUNO = {5}", tb_nome.Text, mtb_telefone.Text, cb_status.SelectedValue, cb_turma.SelectedValue, destinoCompleto, idSelecionado);
                 Banco.dml(queryAtualizarAluno);
-                dgv_gestaoAlunos[1,linha].Value = tb_nome.Text;
+                dgv_gestaoAlunos[1, linha].Value = tb_nome.Text;
             }
         }
 
         private void btn_excluir_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show("Deseja excluir?", "Exluir", MessageBoxButtons.YesNo);
-            if(res == DialogResult.Yes)
+            if (res == DialogResult.Yes)
             {
 
-                if (File.Exists(pb_fotoAluno.ImageLocation))
+                if (File.Exists(pb_foto.ImageLocation))
                 {
-                    File.Delete(pb_fotoAluno.ImageLocation);
+                    File.Delete(pb_foto.ImageLocation);
                 }
 
                 string queryExcluirAluno = string.Format(@"DELETE 
                                                            FROM tb_alunos
-                                                           WHERE N_IDALUNO = {0}",idSelecionado);
+                                                           WHERE N_IDALUNO = {0}", idSelecionado);
                 Banco.dml(queryExcluirAluno);
                 dgv_gestaoAlunos.Rows.Remove(dgv_gestaoAlunos.CurrentRow);
                 tb_nome.Clear();
                 mtb_telefone.Clear();
                 cb_status.SelectedIndex = 0;
                 cb_turma.SelectedIndex = 0;
-                pb_fotoAluno.ImageLocation = null;
+                pb_foto.ImageLocation = null;
             }
         }
 
@@ -133,16 +137,11 @@ namespace App_Academia
 
         private void btn_imprimir_Click(object sender, EventArgs e)
         {
-            string nomeArquivo = Globais.caminhoCarteirinha + @"\carteirinha "+tb_nome.Text+".pdf";
+            string nomeArquivo = Globais.caminhoCarteirinha + @"\carteirinha.pdf";
             FileStream arquivoPDF = new FileStream(nomeArquivo, FileMode.Create);
 
             Document doc = new Document(PageSize.A4);
             PdfWriter escritorPDF = PdfWriter.GetInstance(doc, arquivoPDF);
-
-            iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(Globais.caminho + @"/logoAcademia.png");
-            logo.ScaleToFit(140f, 110f);
-            //logo.Alignment = Element.ALIGN_LEFT;
-            logo.SetAbsolutePosition(0f, 742f); //x e y 
 
             string dados = "";
             Paragraph paragrafo1 = new Paragraph(dados, new iTextSharp.text.Font(iTextSharp.text.Font.NORMAL, 20, (int)System.Drawing.FontStyle.Bold));
@@ -150,38 +149,98 @@ namespace App_Academia
             paragrafo1.Add("Carteirinha de Aluno\n");
             paragrafo1.Font = new iTextSharp.text.Font(iTextSharp.text.Font.NORMAL, 14, (int)System.Drawing.FontStyle.Italic);
             paragrafo1.Alignment = Element.ALIGN_RIGHT;
-            paragrafo1.Add("Nome: "+tb_nome.Text+"\nTelefone: "+mtb_telefone.Text+"\n\n");
+            paragrafo1.Add("Nome: " + tb_nome.Text + "\nTelefone: " + mtb_telefone.Text + "\n\n");
 
             Paragraph paragrafoFoto = new Paragraph();
             string fotoDoAluno = "";
-            string queryDaFoto = string.Format( @"SELECT T_FOTO
+            string queryDaFoto = string.Format(@"SELECT T_FOTO
                                                   FROM tb_alunos 
-                                                  WHERE N_IDALUNO = {0}",idSelecionado);
+                                                  WHERE N_IDALUNO = {0}", idSelecionado);
             DataTable dt = Banco.dql(queryDaFoto);
             fotoDoAluno = dt.Rows[0].Field<string>("T_FOTO");
-            
-            
+
             if (!string.IsNullOrEmpty(fotoDoAluno))// verificando se o caminho da foto não está vazio
             {
                 iTextSharp.text.Image fotoImagem = iTextSharp.text.Image.GetInstance(fotoDoAluno);// Cria a imagem a partir do caminho da foto
 
                 fotoImagem.ScaleToFit(200f, 200f);
-                fotoImagem.SetAbsolutePosition(0f, 700f);
+                fotoImagem.SetAbsolutePosition(0f, 650f);
 
                 paragrafoFoto.Add(fotoImagem);// Adiciona a imagem no parágrafo
             }
 
             doc.Open();
-            //doc.Add(logo);
             doc.Add(paragrafoFoto);
             doc.Add(paragrafo1);
             doc.Close();
 
-            if(MessageBox.Show("Deseja abrir a carteirinha?", "Carteirinha", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Deseja abrir a carteirinha?", "Carteirinha", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start(Globais.caminhoCarteirinha + @"\carteirinha " + tb_nome.Text + ".pdf");
+                System.Diagnostics.Process.Start(Globais.caminhoCarteirinha + @"\carteirinha.pdf");
             }
 
+        }
+
+        private void lb_alterarFoto_MouseDoubleClick(object sender, MouseEventArgs e)
+        {   
+            origemCompleto = "";
+            foto = "";
+            pastaDestino = Globais.caminhoFoto;
+            destinoCompleto = "";
+            DialogResult res = MessageBox.Show("Deseja Alterar foto?", "Alterar", MessageBoxButtons.YesNo);
+            if (res == DialogResult.Yes)
+            {
+                if (File.Exists(pb_foto.ImageLocation))
+                {
+                    File.Delete(pb_foto.ImageLocation);
+                }
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    origemCompleto = openFileDialog1.FileName; //pegando nome do arquivo e caminho
+                    foto = openFileDialog1.SafeFileName; //pegando só o nome do arquivo
+
+                    destinoCompleto = pastaDestino + foto;
+                }
+                if (destinoCompleto == "")
+                {
+                    if (MessageBox.Show("Nenhuma foto selecionada, deseja continuar?", "ERROR", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+
+                if (destinoCompleto != "")
+                {
+                    System.IO.File.Copy(origemCompleto, destinoCompleto, true);
+                    if (File.Exists(destinoCompleto))
+                    {
+                        pb_foto.ImageLocation = destinoCompleto;
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Erro ao localizar arquivo, deseja continuar?", "ERROR", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            return;
+                        }
+                    }
+                }
+                if (File.Exists(destinoCompleto))
+                {
+                    if (MessageBox.Show("Arquivo ja existente, deseja substituir?", "Substituir", MessageBoxButtons.YesNo) == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
+
+                string queryUpdateFoto = string.Format(@"UPDATE tb_alunos 
+                                                      SET T_FOTO = '{0}'
+                                                      WHERE N_IDALUNO = {1}", destinoCompleto, idSelecionado);
+                Banco.dml(queryUpdateFoto);
+                MessageBox.Show("Foto Alterada com Sucesso");
+
+                pb_foto.ImageLocation = origemCompleto;                
+            }
         }
     }
 }

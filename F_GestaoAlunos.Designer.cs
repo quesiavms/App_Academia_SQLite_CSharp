@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv_gestaoAlunos = new System.Windows.Forms.DataGridView();
             this.tb_nome = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,25 +44,26 @@
             this.btn_excluir = new System.Windows.Forms.Button();
             this.btn_salvar = new System.Windows.Forms.Button();
             this.btn_imprimir = new System.Windows.Forms.Button();
-            this.pb_fotoAluno = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lb_alterarFoto = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.pb_foto = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_gestaoAlunos)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_fotoAluno)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_foto)).BeginInit();
             this.SuspendLayout();
             // 
             // dgv_gestaoAlunos
             // 
             this.dgv_gestaoAlunos.AllowUserToAddRows = false;
             this.dgv_gestaoAlunos.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_gestaoAlunos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_gestaoAlunos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_gestaoAlunos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_gestaoAlunos.EnableHeadersVisualStyles = false;
             this.dgv_gestaoAlunos.Location = new System.Drawing.Point(12, 12);
@@ -210,30 +211,37 @@
             this.btn_imprimir.UseVisualStyleBackColor = true;
             this.btn_imprimir.Click += new System.EventHandler(this.btn_imprimir_Click);
             // 
-            // pb_fotoAluno
+            // lb_alterarFoto
             // 
-            this.pb_fotoAluno.Location = new System.Drawing.Point(364, 261);
-            this.pb_fotoAluno.Name = "pb_fotoAluno";
-            this.pb_fotoAluno.Size = new System.Drawing.Size(126, 159);
-            this.pb_fotoAluno.TabIndex = 69;
-            this.pb_fotoAluno.TabStop = false;
+            this.lb_alterarFoto.AutoSize = true;
+            this.lb_alterarFoto.Location = new System.Drawing.Point(361, 439);
+            this.lb_alterarFoto.Name = "lb_alterarFoto";
+            this.lb_alterarFoto.Size = new System.Drawing.Size(190, 16);
+            this.lb_alterarFoto.TabIndex = 70;
+            this.lb_alterarFoto.Text = "Clique duplo para alterar a foto";
+            this.lb_alterarFoto.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lb_alterarFoto_MouseDoubleClick);
             // 
-            // label5
+            // openFileDialog1
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(361, 439);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(190, 16);
-            this.label5.TabIndex = 70;
-            this.label5.Text = "Clique duplo para alterar a foto";
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // pb_foto
+            // 
+            this.pb_foto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pb_foto.Location = new System.Drawing.Point(364, 267);
+            this.pb_foto.Name = "pb_foto";
+            this.pb_foto.Size = new System.Drawing.Size(126, 159);
+            this.pb_foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_foto.TabIndex = 71;
+            this.pb_foto.TabStop = false;
             // 
             // F_GestaoAlunos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 560);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.pb_fotoAluno);
+            this.Controls.Add(this.pb_foto);
+            this.Controls.Add(this.lb_alterarFoto);
             this.Controls.Add(this.btn_imprimir);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cb_turma);
@@ -253,7 +261,7 @@
             this.Load += new System.EventHandler(this.F_GestaoAlunos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_gestaoAlunos)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pb_fotoAluno)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_foto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,7 +284,8 @@
         private System.Windows.Forms.Button btn_excluir;
         private System.Windows.Forms.Button btn_salvar;
         private System.Windows.Forms.Button btn_imprimir;
-        private System.Windows.Forms.PictureBox pb_fotoAluno;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lb_alterarFoto;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.PictureBox pb_foto;
     }
 }
